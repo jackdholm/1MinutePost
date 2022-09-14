@@ -1,0 +1,17 @@
+<mat-card id="cardBase">
+  <div id="postHeader">
+    <h5 id="username">{{Username}}</h5>
+    <p id="timeLeft">
+      <countdown [config]="TimeConfig" (event)="HandleEvent($event)"></countdown>
+    </p>
+  </div>
+  <mat-card-content>
+    <p>
+      {{Text}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <!--<button mat-icon-button><i class="fas fa-arrow-up"></i></button>-->
+  </mat-card-actions>
+  
+</mat-card>
