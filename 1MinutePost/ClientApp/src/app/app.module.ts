@@ -14,6 +14,9 @@ import { PostContainerComponent } from './post-container/post-container.componen
 import { PostCreateComponent } from './post-create/post-create.component';
 import { CountdownGlobalConfig, CountdownModule } from 'ngx-countdown';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { LoginComponent } from './login/login.component';
+import { LoginPopupComponent } from './login-popup/login-popup.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     HomeComponent,
     PostComponent,
     PostContainerComponent,
-    PostCreateComponent
+    PostCreateComponent,
+    LoginComponent,
+    LoginPopupComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -36,9 +41,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCardModule,
     MatButtonModule,
     CountdownModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [CountdownGlobalConfig],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LoginPopupComponent]
 })
 export class AppModule { }

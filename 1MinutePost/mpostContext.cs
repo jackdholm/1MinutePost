@@ -12,7 +12,7 @@ namespace _1MinutePost
         {
         }
 
-        public mpostContext(DbContextOptions options)
+        public mpostContext(DbContextOptions<mpostContext> options)
             : base(options)
         {
         }
@@ -22,18 +22,16 @@ namespace _1MinutePost
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseNpgsql("Name=ConnectionString");
-            //}
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql("Name=mpostDB");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresExtension("uuid-ossp")
                 .HasAnnotation("Relational:Collation", "en_US.UTF-8");
-            //modelBuilder.HasSequence<int>("Post_seq").StartsAt(0).IncrementsBy(1);
-            //modelBuilder.HasSequence<int>("User_seq").StartsAt(1).IncrementsBy(1);
 
             modelBuilder.Entity<Post>(entity =>
             {
@@ -66,6 +64,10 @@ namespace _1MinutePost
                 entity.ToTable("users");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(80)
+                    .HasColumnName("password");
 
                 entity.Property(e => e.Pid)
                     .HasColumnName("pid")

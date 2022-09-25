@@ -23,6 +23,7 @@ namespace _1MinutePost
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -33,6 +34,8 @@ namespace _1MinutePost
             opt.UseNpgsql(Configuration.GetConnectionString("mpostDB")));
 
             services.AddScoped<DbContext, mpostContext>();
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddScoped<JwtService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,7 +71,13 @@ namespace _1MinutePost
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-
+            app.UseCors(options =>
+            {
+                options.WithOrigins(new[] { "https://localhost:5008", "https://localhost:4200" });
+                options.AllowAnyHeader();
+                options.AllowAnyMethod();
+                options.AllowCredentials();
+            });
             app.UseSpa(spa =>
             {
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,

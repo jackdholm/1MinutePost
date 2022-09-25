@@ -15,6 +15,7 @@ namespace _1MinutePost
         public int Id { get; set; }
         public Guid? Pid { get; set; }
         public string Username { get; set; }
+        public string Password { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
     }
