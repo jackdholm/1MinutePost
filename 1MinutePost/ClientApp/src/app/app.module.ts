@@ -17,6 +17,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { LoginComponent } from './login/login.component';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RegisterPopupComponent } from './register-popup/register-popup.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     PostContainerComponent,
     PostCreateComponent,
     LoginComponent,
-    LoginPopupComponent
+    LoginPopupComponent,
+    RegisterPopupComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,6 +48,6 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   providers: [CountdownGlobalConfig],
   bootstrap: [AppComponent],
-  entryComponents: [LoginPopupComponent]
+  entryComponents: [LoginPopupComponent, RegisterPopupComponent]
 })
 export class AppModule { }

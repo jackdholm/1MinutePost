@@ -1,2 +1,8 @@
-<p>login works!</p>
-<button class="btn btn-primary" (click)="openDialog()">Log in</button>
+<div *ngIf="LoggedIn; else elseBlock">
+  <button class="btn btn-primary" (click)="LogOut()">Log Out</button>
+  <span class="username-display">{{CurrentUser}}</span>
+</div>
+<ng-template #elseBlock>
+  <button class="btn btn-primary" (click)="OpenLogin()">Log In</button>
+  <button class="btn btn-primary" (click)="OpenRegister()">Register</button>
+</ng-template>

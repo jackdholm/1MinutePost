@@ -42,11 +42,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\ILogin.ts" />
     <None Remove="ClientApp\src\app\IPost.ts" />
+    <None Remove="ClientApp\src\app\IRegister.ts" />
+    <None Remove="ClientApp\src\IUser.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\IRegister.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\ILogin.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\IPost.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\IUser.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ClientApp\src\app\ILogin - Copy.js">
+      <DependentUpon>ILogin.js</DependentUpon>
+    </None>
+    <None Update="ClientApp\src\app\ILogin - Copy.js.map">
+      <DependentUpon>ILogin.js.map</DependentUpon>
+    </None>
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -14,9 +14,12 @@ namespace _1MinutePost.Controllers
     public class PostController : ControllerBase
     {
         private mpostContext _context;
-        public PostController(DbContext context)
+        private JwtService _jwtService;
+
+        public PostController(DbContext context, JwtService jwtService)
         {
             _context = (mpostContext)context;
+            _jwtService = jwtService;
         }
         // GET: api/<PostController>
         [HttpGet]
@@ -41,7 +44,8 @@ namespace _1MinutePost.Controllers
                 IPost i = new IPost
                 {
                     Text = p.Text,
-                    Created = (DateTime)p.Created
+                    Created = (DateTime)p.Created,
+                    Username = p.Name
                 };
                 posts.Add(i);
             }
@@ -52,20 +56,35 @@ namespace _1MinutePost.Controllers
 
         // POST api/<PostController>
         [HttpPost]
-        public void Post([FromBody]IPost post)
+        public IActionResult Post([FromBody]IPost post)
         {
+            User user;
+            try
+            {
+                string jwt = Request.Cookies["jwt"];
+                var token = _jwtService.VerifyUser(jwt);
+                int id = Int32.Parse(token.Issuer);
+
+                user = _context.Users.FirstOrDefault(u => u.Id == id);
+            }
+            catch
+            {
+                user = _context.Users.FirstOrDefault(u => u.Id == 0);
+            }
+
             Console.WriteLine(post.Text);
             Post p = new Post()
             {
-                UserId = 0,
+                UserId = user.Id,
                 Text = post.Text,
                 Created = DateTime.UtcNow
             };
-            User u = _context.Users.FirstOrDefault(u => u.Id == 0);
-            u.Posts.Add(p);
-            p.User = u;
+            user.Posts.Add(p);
+            p.User = user;
             _context.Add(p);
             _context.SaveChanges();
+
+            return Ok();
         }
         
         // PUT api/<PostController>/5

@@ -1,0 +1,10 @@
+<h2> Welcome </h2>
+<form #registerForm="ngForm" (ngSubmit)="submitRegistration(registerForm.value); registerForm.reset()">
+  <div class="form-group">
+    <span>Username: </span>
+    <input type="text" required maxlength="20" ngModel name="username" #username="ngModel" id="username" cols="30" class="form-control" />
+    <span>Password: </span>
+    <input type="password" required maxlength="20" ngModel name="password" #password="ngModel" id="password" cols="30" class="form-control" />
+  </div>
+  <button class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
+</form>

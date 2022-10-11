@@ -10,12 +10,12 @@ namespace _1MinutePost.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private mpostContext _context;
         private JwtService _jwtService;
 
-        public LoginController(DbContext context, JwtService jwtService)
+        public AuthController(DbContext context, JwtService jwtService)
         {
             _context = (mpostContext)context;
             _jwtService = jwtService;
@@ -26,11 +26,13 @@ namespace _1MinutePost.Controllers
         {
             var user = new User
             {
-                Username = data.Name,
+                Username = data.Username,
                 Password = BCrypt.Net.BCrypt.HashPassword(data.Password)
             };
 
             _context.Users.Add(user);
+            _context.SaveChanges();
+
 
             return Created("success", user);
         }
@@ -38,7 +40,7 @@ namespace _1MinutePost.Controllers
         [HttpPost("login")]
         public IActionResult Login(ILogin data)
         {
-            User user = _context.Users.FirstOrDefault(u => u.Username == data.Name);
+            User user = _context.Users.FirstOrDefault(u => u.Username == data.Username  );
 
             if (user == null)
                 return BadRequest("Invalid Credentials");
@@ -48,7 +50,7 @@ namespace _1MinutePost.Controllers
 
             string jwt = _jwtService.Generate(user.Id);
 
-            Response.Cookies.Append("jwt", jwt, new CookieOptions{ HttpOnly = true });
+            Response.Cookies.Append("jwt", jwt, new CookieOptions{ HttpOnly = true, SameSite = SameSiteMode.Strict});
 
             return Ok("Success");
         }

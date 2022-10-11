@@ -7,5 +7,6 @@ namespace _1MinutePost
         //public string Username { get; set; }
         public string Text { get; set; }
         public DateTime Created { get; set; }
+        public string Username { get; set; }
     }
 }
