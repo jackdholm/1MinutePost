@@ -23,8 +23,6 @@ export class PostService
   {
     this.http.get<IPost[]>(this.baseUrl + 'api/post').subscribe(data => {
       this._list = data;
-      console.log("LIST");
-      console.log(this._list);
       this._sourceList.next(this._list);
     });
   }

@@ -1,4 +1,4 @@
 export interface IRegister {
-  Username: string;
-  Password: string;
+  username: string;
+  password: string;
 }

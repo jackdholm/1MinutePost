@@ -73,7 +73,7 @@ namespace _1MinutePost
             });
             app.UseCors(options =>
             {
-                options.WithOrigins(new[] { "https://localhost:5008", "https://localhost:4200" });
+                options.WithOrigins(new[] { "https://localhost:4200" });
                 options.AllowAnyHeader();
                 options.AllowAnyMethod();
                 options.AllowCredentials();

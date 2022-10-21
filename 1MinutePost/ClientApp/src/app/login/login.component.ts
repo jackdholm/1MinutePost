@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.aService.User.subscribe(user => {
-      if (user == null)
-      {
+      if (user == null) {
         console.log("Not logged in");
         this.CurrentUser = "";
         this.LoggedIn = false;
@@ -30,7 +29,7 @@ export class LoginComponent implements OnInit {
         this.CurrentUser = user.username;
         this.LoggedIn = true;
       }
-    })
+    }, error => console.log(error));
   }
 
   OpenLogin() {

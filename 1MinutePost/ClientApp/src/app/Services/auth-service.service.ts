@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { ILogin } from '../ILogin';
 import { IRegister } from '../IRegister';
 import { IUser } from '../IUser';
@@ -37,19 +38,18 @@ export class AuthService
 
   public Register(user: IRegister)
   {
-    var observable = this.http.post(this._baseUrl + 'register', user);
+    var observable = this.http.post(this._baseUrl + 'register', user).pipe(shareReplay())
     observable.subscribe(data => {
-      this.Get();
-      console.log("success?");
-      console.log(data);
-    }, error => console.log("Registration Failed"));
+      let l: ILogin = { username: user.username, password: user.password };
+      this.Login(l);
+    }, error => console.log(error));
 
     return observable;
   }
 
   public Login(user: ILogin)
   {
-    var observable = this.http.post(this._baseUrl + 'login', user, { withCredentials: true, responseType: "text" });
+    var observable = this.http.post(this._baseUrl + 'login', user, { withCredentials: true, responseType: "text" }).pipe(shareReplay());
     observable.subscribe(data => {
       this.Get();
     }, error => console.log(error));

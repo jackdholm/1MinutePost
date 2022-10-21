@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,9 @@ namespace _1MinutePost.Controllers
     {
         private mpostContext _context;
         private JwtService _jwtService;
+        private IConfiguration _configuration;
 
-        public AuthController(DbContext context, JwtService jwtService)
+        public AuthController(DbContext context, JwtService jwtService, IConfiguration configuration)
         {
             _context = (mpostContext)context;
             _jwtService = jwtService;
@@ -47,10 +49,25 @@ namespace _1MinutePost.Controllers
 
             if (!BCrypt.Net.BCrypt.Verify(data.Password, user.Password))
                 return BadRequest("Invalid Credentials");
+            
+            string jwt;
+            try
+            {
+                jwt = _jwtService.Generate(user.Id);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
 
-            string jwt = _jwtService.Generate(user.Id);
-
-            Response.Cookies.Append("jwt", jwt, new CookieOptions{ HttpOnly = true, SameSite = SameSiteMode.Strict});
+            try
+            {
+                Response.Cookies.Append("jwt", jwt, new CookieOptions { HttpOnly = true, SameSite = SameSiteMode.Strict });
+            }
+            catch
+            {
+                return StatusCode(500, new { message = "Append Cookies Failed"});
+            }
 
             return Ok("Success");
         }
