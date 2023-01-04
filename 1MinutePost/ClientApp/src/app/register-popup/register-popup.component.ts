@@ -9,6 +9,7 @@ import { AuthService } from '../Services/auth-service.service';
   styleUrls: ['./register-popup.component.css']
 })
 export class RegisterPopupComponent implements OnInit {
+  ErrorExistingUser = false;
 
   constructor(private dialogRef: MatDialog, private aService: AuthService) { }
 
@@ -16,11 +17,13 @@ export class RegisterPopupComponent implements OnInit {
   }
 
   submitRegistration(value: IRegister) {
+    this.ErrorExistingUser = false;
     this.aService.Register(value).subscribe(data => {
       console.log("REGISTERED");
       this.dialogRef.closeAll();
     }, error => {
-      console.log(error);
+        console.log(error);
+        this.ErrorExistingUser = true;
     });
   }
 }

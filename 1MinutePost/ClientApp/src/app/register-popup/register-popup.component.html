@@ -1,6 +1,9 @@
-<h2> Welcome </h2>
+<h2> New User </h2>
 <form #registerForm="ngForm" (ngSubmit)="submitRegistration(registerForm.value); registerForm.reset()">
   <div class="form-group">
+    <div *ngIf="ErrorExistingUser" class="alert-danger">
+      User already exists
+    </div>
     <span>Username: </span>
     <input type="text" required maxlength="20" ngModel name="username" #username="ngModel" id="username" cols="30" class="form-control" />
     <span>Password: </span>

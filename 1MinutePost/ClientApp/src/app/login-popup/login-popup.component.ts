@@ -9,6 +9,7 @@ import { AuthService } from '../Services/auth-service.service';
   styleUrls: ['./login-popup.component.css']
 })
 export class LoginPopupComponent implements OnInit {
+  ErrorInvalidCredentials = false;
 
   constructor(private dialogRef: MatDialog, private aService: AuthService) { }
 
@@ -17,12 +18,14 @@ export class LoginPopupComponent implements OnInit {
 
   submitLogin(value: ILogin)
   {
+    this.ErrorInvalidCredentials = false;
     console.log(value);
     this.aService.Login(value).subscribe(data => {
       console.log("LOGGED IN");
       this.dialogRef.closeAll();
     }, error => {
         console.log(error);
+        this.ErrorInvalidCredentials = true;
     });
   }
 }

@@ -15,9 +15,8 @@ namespace _1MinutePost.Controllers
     {
         private mpostContext _context;
         private JwtService _jwtService;
-        private IConfiguration _configuration;
 
-        public AuthController(DbContext context, JwtService jwtService, IConfiguration configuration)
+        public AuthController(DbContext context, JwtService jwtService)
         {
             _context = (mpostContext)context;
             _jwtService = jwtService;
@@ -28,10 +27,12 @@ namespace _1MinutePost.Controllers
         {
             var user = new User
             {
-                Username = data.Username,
+                Username = data.Username.Trim().ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(data.Password)
             };
-
+            User existing = _context.Users.FirstOrDefault(u => u.Username == user.Username);
+            if (existing != null)
+                return Conflict("User already exists");
             _context.Users.Add(user);
             _context.SaveChanges();
 
@@ -42,7 +43,8 @@ namespace _1MinutePost.Controllers
         [HttpPost("login")]
         public IActionResult Login(ILogin data)
         {
-            User user = _context.Users.FirstOrDefault(u => u.Username == data.Username  );
+            string username = data.Username.ToLower();
+            User user = _context.Users.FirstOrDefault(u => u.Username == username);
 
             if (user == null)
                 return BadRequest("Invalid Credentials");

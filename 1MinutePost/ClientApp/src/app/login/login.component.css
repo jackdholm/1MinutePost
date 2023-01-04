@@ -3,4 +3,5 @@
 }
 .username-display{
     margin: 0px 0px 5px 4px;
+    text-transform: capitalize;
 }
