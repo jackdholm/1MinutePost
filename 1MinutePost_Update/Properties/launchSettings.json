@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "1MinutePost_Update": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
