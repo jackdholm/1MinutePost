@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { CountdownConfig, CountdownEvent, CountdownGlobalConfig } from 'ngx-countdown';
+import { Observable } from 'rxjs';
+import { VoteService } from '../Services/vote-service.service';
 
 @Component({
   selector: 'app-post',
@@ -13,16 +15,24 @@ export class PostComponent implements OnInit
   @Input('text') Text : string;
   @Input('username') Username: string;
   @Input('created') Created: Date;
+  @Input('pid') Pid: string;
   @Input('position') Position: number;
+  @Input('vote-count') VoteCount;
+  @Input('voted') Voted;
   @Output('delete') Delete: EventEmitter<number> = new EventEmitter();
 
   TimeConfig: CountdownConfig = { leftTime: 600, format: 'm:ss' };
 
-  constructor() { }
+  numberVotes: number = 0;
+  arrowVoted: boolean = false;
+
+  constructor(private voteService: VoteService) { }
 
   ngOnInit()
   {
-    var time = 600000 - (new Date().getTime() - new Date(this.Created).getTime()); 
+    this.arrowVoted = this.Voted === "true" ? true : false;
+    this.numberVotes = +this.VoteCount;
+    var time = 600000 - (new Date().getTime() - new Date(this.Created).getTime()) + 60000 * this.numberVotes;
     this.TimeConfig.leftTime = time / 1000;
   }
 
@@ -30,5 +40,17 @@ export class PostComponent implements OnInit
   {
     if (e.action === 'done')
       this.Delete.emit(this.Position);
+  }
+
+  vote() {
+    this.voteService.vote(this.Pid);
+    if (this.arrowVoted) {
+      this.arrowVoted = false;
+      this.numberVotes--;
+    }
+    else {
+      this.arrowVoted = true;
+      this.numberVotes++;
+    }
   }
 }

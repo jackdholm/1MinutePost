@@ -14,7 +14,12 @@ export class PostContainerComponent implements OnInit
   constructor(private pService: PostService) { }
   ngOnInit(): void
   {
-    this.pService.Posts.subscribe(data => this.Posts = data);
+    this.pService.Posts.subscribe(data => {
+      this.Posts = data;
+      this.Posts.forEach(p => {
+      console.log(p);
+    });
+    });
     //this.pService.getAll().subscribe(data => this.Posts = data);
   }
 

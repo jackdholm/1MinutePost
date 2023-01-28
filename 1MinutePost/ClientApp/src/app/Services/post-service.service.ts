@@ -10,8 +10,8 @@ export class PostService
 {
   baseUrl: string
   private _list: IPost[]
-  private _sourceList : BehaviorSubject<IPost[]> = new BehaviorSubject([]);
-  public Posts = this._sourceList.asObservable();
+  private _sourceList: BehaviorSubject<IPost[]> = new BehaviorSubject([]);
+  public Posts: Observable<IPost[]> = this._sourceList.asObservable();
 
   constructor(private http: HttpClient, @Inject('BASE_URL') url: string)
   {
@@ -21,8 +21,9 @@ export class PostService
 
   Get()
   {
-    this.http.get<IPost[]>(this.baseUrl + 'api/post').subscribe(data => {
+    this.http.get<IPost[]>(this.baseUrl + 'api/post').subscribe((data: IPost[]) => {
       this._list = data;
+      console.log("TYPE_______ ", typeof (this._list));
       this._sourceList.next(this._list);
     });
   }

@@ -11,7 +11,8 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <!--<button mat-icon-button><i class="fas fa-arrow-up"></i></button>-->
+    <button mat-icon-button (click)="vote()"><i [ngClass]="{'arrowVoted' : arrowVoted, 'arrowNotVoted' : !arrowVoted}" class="fas fa-arrow-up voteArrow"></i></button>
+    <span class="voteCount">{{ numberVotes }}</span>
   </mat-card-actions>
   
 </mat-card>

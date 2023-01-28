@@ -4,7 +4,39 @@
   background-color: #e2e666;
   word-wrap: break-word;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
+.mat-card-header {
+  flex-shrink: 0;
+}
+
+  /*.mat-card-content {
+    flex-grow: 2;
+    overflow: auto;
+  }*/
+.mat-card-content {
+  flex-grow: 1;
+  overflow: auto;
+}
+
 #username {
     text-transform: capitalize;
+}
+
+.voteArrow {
+    font-size: 2em;
+}
+
+.arrowVoted {
+    color: green;
+}
+
+.arrowNotVoted {
+    color: black;
+}
+
+.voteCount {
+    font-size: 1.25em;
+    font-weight: bold;
 }

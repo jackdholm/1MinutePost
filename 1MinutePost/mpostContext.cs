@@ -19,6 +19,7 @@ namespace _1MinutePost
 
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Vote> Votes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -76,6 +77,33 @@ namespace _1MinutePost
                 entity.Property(e => e.Username)
                     .HasMaxLength(20)
                     .HasColumnName("username");
+            });
+
+            modelBuilder.Entity<Vote>(entity =>
+            {
+                entity.ToTable("votes");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.PostId).HasColumnName("post_id");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.Property(e => e.Voted)
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("voted");
+
+                entity.HasOne(d => d.Post)
+                    .WithMany(p => p.Votes)
+                    .HasForeignKey(d => d.PostId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("votes_post_id_fkey");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Votes)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("votes_user_id_fkey");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -10,6 +10,7 @@ namespace _1MinutePost
         public User()
         {
             Posts = new HashSet<Post>();
+            Votes = new HashSet<Vote>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,6 @@ namespace _1MinutePost
         public string Password { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }
