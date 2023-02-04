@@ -1,5 +1,6 @@
 import { COMPILER_OPTIONS, Component, OnInit } from '@angular/core';
 import { IPost } from '../IPost';
+import { ErrorService } from '../Services/error.service';
 import { PostService } from '../Services/post-service.service';
 
 @Component({
@@ -9,12 +10,13 @@ import { PostService } from '../Services/post-service.service';
 })
 export class PostCreateComponent implements OnInit {
 
-  constructor(private pService: PostService) { }
+  constructor(private pService: PostService, private errorService: ErrorService) { }
 
   ngOnInit() {
   }
   createPost(value: IPost): void
   {
     this.pService.post(value);
+    this.errorService.clearErrors();
   }
 }

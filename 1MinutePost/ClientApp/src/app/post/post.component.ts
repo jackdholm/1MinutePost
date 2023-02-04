@@ -37,7 +37,8 @@ export class PostComponent implements OnInit
     this.numberVotes = +this.VoteCount;
     this.configureTime();
     this.errorService.NotLoggedIn.subscribe(e => {
-      this.errorNotLoggedIn = e;
+      if (e === false)
+        this.errorNotLoggedIn = e;
     });
   }
 
@@ -65,6 +66,7 @@ export class PostComponent implements OnInit
       }
     }, (error) => {
       this.errorService.setError();
+      this.errorNotLoggedIn = true;
     });
   }
 }
