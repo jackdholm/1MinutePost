@@ -25,11 +25,9 @@ export class AuthService
   private Get()
   {
     this.http.get<IUser>(this._baseUrl + 'user').subscribe(data => {
-      console.log(data);
       this._user = data;
       this._currentUser.next(this._user);
     }, error => {
-        console.log(error.error);
         this._user = null;
         this._currentUser.next(this._user);
     });
@@ -59,7 +57,6 @@ export class AuthService
   public Logout()
   {
     this.http.post(this._baseUrl + 'logout', null, { withCredentials: true, responseType: "text" }).subscribe(data => {
-      console.log("Logged out");
       this._user = null;
       this._currentUser.next(this._user);
     });

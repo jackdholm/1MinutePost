@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginPopupComponent } from '../login-popup/login-popup.component';
 import { RegisterPopupComponent } from '../register-popup/register-popup.component';
 import { AuthService } from '../Services/auth-service.service';
+import { ErrorService } from '../Services/error.service';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +15,15 @@ export class LoginComponent implements OnInit {
   public CurrentUser: string;
   LoggedIn = false;
 
-  constructor(private dialogRef: MatDialog, private aService: AuthService) { }
+  constructor(private dialogRef: MatDialog, private aService: AuthService, private errorService: ErrorService) { }
 
   ngOnInit() {
     this.aService.User.subscribe(user => {
       if (user == null) {
-        console.log("Not logged in");
         this.CurrentUser = "";
         this.LoggedIn = false;
       }
       else {
-        console.log(user);
-        console.log("logged in as " + user.username);
         this.CurrentUser = user.username;
         this.LoggedIn = true;
       }
@@ -34,6 +32,7 @@ export class LoginComponent implements OnInit {
 
   OpenLogin() {
     this.dialogRef.open(LoginPopupComponent);
+    this.errorService.clearErrors();
     //this.dialogRef.open(LoginPopupComponent, {
     //  width: '250px',
     //  position: { right: '0' }
@@ -42,6 +41,7 @@ export class LoginComponent implements OnInit {
 
   OpenRegister() {
     this.dialogRef.open(RegisterPopupComponent);
+    this.errorService.clearErrors();
   }
 
   LogOut() {

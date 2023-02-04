@@ -2,7 +2,9 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { CountdownComponent, CountdownConfig, CountdownEvent, CountdownGlobalConfig } from 'ngx-countdown';
+import { error } from 'protractor';
 import { Observable } from 'rxjs';
+import { ErrorService } from '../Services/error.service';
 import { VoteService } from '../Services/vote-service.service';
 
 @Component({
@@ -25,14 +27,18 @@ export class PostComponent implements OnInit
 
   numberVotes: number = 0;
   arrowVoted: boolean = false;
+  errorNotLoggedIn: boolean = false;
 
-  constructor(private voteService: VoteService) { }
+  constructor(private voteService: VoteService, private errorService: ErrorService) { }
 
   ngOnInit()
   {
     this.arrowVoted = this.Voted === "true" ? true : false;
     this.numberVotes = +this.VoteCount;
     this.configureTime();
+    this.errorService.NotLoggedIn.subscribe(e => {
+      this.errorNotLoggedIn = e;
+    });
   }
 
   configureTime() {
@@ -47,15 +53,18 @@ export class PostComponent implements OnInit
   }
 
   vote() {
-    this.voteService.vote(this.Pid);
-    if (this.arrowVoted) {
-      this.arrowVoted = false;
-      this.numberVotes--;
-    }
-    else {
-      this.arrowVoted = true;
-      this.numberVotes++;
-      this.configureTime();
-    }
+    this.voteService.vote(this.Pid).subscribe(response => {
+      if (this.arrowVoted) {
+        this.arrowVoted = false;
+        this.numberVotes--;
+      }
+      else {
+        this.arrowVoted = true;
+        this.numberVotes++;
+        this.configureTime();
+      }
+    }, (error) => {
+      this.errorService.setError();
+    });
   }
 }

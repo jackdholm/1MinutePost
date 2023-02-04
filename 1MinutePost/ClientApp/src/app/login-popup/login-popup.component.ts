@@ -19,12 +19,9 @@ export class LoginPopupComponent implements OnInit {
   submitLogin(value: ILogin)
   {
     this.ErrorInvalidCredentials = false;
-    console.log(value);
     this.aService.Login(value).subscribe(data => {
-      console.log("LOGGED IN");
       this.dialogRef.closeAll();
     }, error => {
-        console.log(error);
         this.ErrorInvalidCredentials = true;
     });
   }

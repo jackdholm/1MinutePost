@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class VoteService {
     this.http.get<number>(this.baseUrl + `api/vote/GetVotesForPost/${postId}`);
   }
 
-  vote(postId: string) {
-    this.http.post(this.baseUrl + `api/vote/VotePost/${postId}`, null).subscribe();
+  vote(postId: string): Observable<any> {
+    return this.http.post(this.baseUrl + `api/vote/VotePost/${postId}`, null);
   }
 }

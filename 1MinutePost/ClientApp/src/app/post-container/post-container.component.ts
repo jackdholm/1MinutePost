@@ -17,7 +17,6 @@ export class PostContainerComponent implements OnInit
     this.pService.Posts.subscribe(data => {
       this.Posts = data;
       this.Posts.forEach(p => {
-      console.log(p);
     });
     });
     //this.pService.getAll().subscribe(data => this.Posts = data);

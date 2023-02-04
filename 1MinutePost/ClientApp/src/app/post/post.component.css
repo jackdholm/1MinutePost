@@ -10,7 +10,10 @@
 .mat-card-header {
   flex-shrink: 0;
 }
-
+.mat-card-actions {
+    display: flex;
+    flex-direction: row;
+}
   /*.mat-card-content {
     flex-grow: 2;
     overflow: auto;
@@ -37,6 +40,8 @@
 }
 
 .voteCount {
-    font-size: 1.25em;
+    font-size: 1.5em;
     font-weight: bold;
+    margin-left: 1em;
+    margin-right: 1em;  
 }
