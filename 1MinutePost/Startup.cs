@@ -87,7 +87,8 @@ namespace _1MinutePost
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.Options.SourcePath = "ClientApp";
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }
