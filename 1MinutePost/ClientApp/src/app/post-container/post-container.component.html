@@ -1,8 +1,8 @@
 <div *ngIf="Posts">
   
-  <mat-grid-list cols="3" rowHeight="310px" gutterSize="7px">
-    <mat-grid-tile *ngFor="let p of Posts; let i = index">
+  <div class="post-container">
+    <div *ngFor="let p of Posts; let i = index">
       <app-post class="post" text="{{ p.text }}" username="{{ p.username }}" created="{{ p.created }}" position="{{ i }}" pid="{{ p.pid }}" vote-count="{{ p.voteCount }}" voted="{{ p.voted }}" (delete)="deletePost($event)"></app-post>
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 </div>
