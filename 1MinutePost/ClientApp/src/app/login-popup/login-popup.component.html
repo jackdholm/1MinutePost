@@ -4,6 +4,9 @@
     <div *ngIf="ErrorInvalidCredentials" class="alert-danger">
       Invalid username or password
     </div>
+    <div *ngIf="unknownError" class="alert-danger">
+      There was an error logging in
+    </div>
     <span>Username: </span>
     <input type="text" required maxlength="20" ngModel name="username" #username="ngModel" id="username" cols="30" class="form-control" />
     <span>Password: </span>

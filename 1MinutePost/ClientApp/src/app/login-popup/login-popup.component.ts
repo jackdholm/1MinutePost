@@ -11,6 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class LoginPopupComponent implements OnInit {
   ErrorInvalidCredentials = false;
+  unknownError = false;
 
   constructor(private dialogRef: MatDialog, private aService: AuthService) { }
 
@@ -20,11 +21,17 @@ export class LoginPopupComponent implements OnInit {
   submitLogin(form: NgForm)
   {
     this.ErrorInvalidCredentials = false;
+    this.unknownError = false;
     this.aService.Login(form.value).subscribe(data => {
       this.dialogRef.closeAll();
       form.reset();
     }, error => {
+      if (error.status === 401) {
         this.ErrorInvalidCredentials = true;
-    });
+      }
+      else {
+        this.unknownError = true;
+      }
+
   }
 }

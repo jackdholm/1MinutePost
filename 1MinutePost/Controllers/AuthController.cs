@@ -47,10 +47,10 @@ namespace _1MinutePost.Controllers
             User user = _context.Users.FirstOrDefault(u => u.Username == username);
 
             if (user == null)
-                return BadRequest("Invalid Credentials");
+                return Unauthorized("Invalid Credentials");
 
             if (!BCrypt.Net.BCrypt.Verify(data.Password, user.Password))
-                return BadRequest("Invalid Credentials");
+                return Unauthorized("Invalid Credentials");
             
             string jwt;
             try
