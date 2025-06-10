@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ILogin } from '../ILogin';
 import { AuthService } from '../Services/auth-service.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login-popup',
@@ -16,11 +17,12 @@ export class LoginPopupComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitLogin(value: ILogin)
+  submitLogin(form: NgForm)
   {
     this.ErrorInvalidCredentials = false;
-    this.aService.Login(value).subscribe(data => {
+    this.aService.Login(form.value).subscribe(data => {
       this.dialogRef.closeAll();
+      form.reset();
     }, error => {
         this.ErrorInvalidCredentials = true;
     });
