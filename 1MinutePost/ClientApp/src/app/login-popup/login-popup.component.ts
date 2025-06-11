@@ -18,8 +18,7 @@ export class LoginPopupComponent implements OnInit {
   ngOnInit() {
   }
 
-  submitLogin(form: NgForm)
-  {
+  submitLogin(form: NgForm) {
     this.ErrorInvalidCredentials = false;
     this.unknownError = false;
     this.aService.Login(form.value).subscribe(data => {
@@ -33,5 +32,6 @@ export class LoginPopupComponent implements OnInit {
         this.unknownError = true;
       }
 
+    });
   }
 }
