@@ -1,5 +1,5 @@
 <mat-card id="cardBase">
-  <div id="postHeader">
+  <div class="d-flex justify-content-between" id="postHeader">
     <h5 id="username">{{Username}}</h5>
     <p id="timeLeft">
       <countdown #counter [config]="TimeConfig" (event)="HandleEvent($event)"></countdown>
