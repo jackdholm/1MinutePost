@@ -48,7 +48,6 @@ import { RegisterPopupComponent } from './register-popup/register-popup.componen
     MatDialogModule
   ],
   providers: [CountdownGlobalConfig],
-  bootstrap: [AppComponent],
-  entryComponents: [LoginPopupComponent, RegisterPopupComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
