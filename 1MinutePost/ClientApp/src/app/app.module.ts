@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { PostContainerComponent } from './post-container/post-container.component';
 import { PostCreateComponent } from './post-create/post-create.component';
-import { CountdownGlobalConfig, CountdownModule } from 'ngx-countdown';
+import { CountdownConfig, CountdownModule } from 'ngx-countdown';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LoginComponent } from './login/login.component';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
@@ -47,7 +47,6 @@ import { RegisterPopupComponent } from './register-popup/register-popup.componen
     MatGridListModule,
     MatDialogModule
   ],
-  providers: [CountdownGlobalConfig],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { CountdownComponent, CountdownConfig, CountdownEvent, CountdownGlobalConfig } from 'ngx-countdown';
+import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { error } from 'protractor';
 import { Observable } from 'rxjs';
 import { ErrorService } from '../Services/error.service';
