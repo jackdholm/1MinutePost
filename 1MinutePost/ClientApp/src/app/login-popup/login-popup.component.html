@@ -1,16 +1,19 @@
-<h2> Login </h2>
-<form #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)">
-  <div class="form-group">
-    <div *ngIf="ErrorInvalidCredentials" class="alert-danger">
-      Invalid username or password
+<div class="m-3">
+  <h2> Login </h2>
+  <form #loginForm="ngForm" (ngSubmit)="submitLogin(loginForm)">
+    <div class="form-group">
+      <div *ngIf="ErrorInvalidCredentials" class="alert-danger">
+        Invalid username or password
+      </div>
+      <div *ngIf="unknownError" class="alert-danger">
+        There was an error logging in
+      </div>
+      <span>Username: </span>
+      <input type="text" required maxlength="20" ngModel name="username" #username="ngModel" id="username" cols="30" class="form-control" />
+      <span>Password: </span>
+      <input type="password" required maxlength="20" ngModel name="password" #password="ngModel" id="password" cols="30" class="form-control" />
     </div>
-    <div *ngIf="unknownError" class="alert-danger">
-      There was an error logging in
-    </div>
-    <span>Username: </span>
-    <input type="text" required maxlength="20" ngModel name="username" #username="ngModel" id="username" cols="30" class="form-control" />
-    <span>Password: </span>
-    <input type="password" required maxlength="20" ngModel name="password" #password="ngModel" id="password" cols="30" class="form-control" />
-  </div>
-  <button class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
-</form>
+    <button class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>
+  </form>
+
+</div>

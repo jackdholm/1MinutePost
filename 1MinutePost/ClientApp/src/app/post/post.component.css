@@ -6,13 +6,10 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  padding: 16px 16px 4px 4px;
 }
 .mat-card-header {
   flex-shrink: 0;
-}
-.mat-card-actions {
-    display: flex;
-    flex-direction: row;
 }
   /*.mat-card-content {
     flex-grow: 2;
@@ -27,21 +24,41 @@
     text-transform: capitalize;
 }
 
-.voteArrow {
-    font-size: 2em;
+button[mat-icon-button] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
 }
 
-.arrowVoted {
-    color: green;
+.vote-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
-.arrowNotVoted {
-    color: black;
+.vote-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.vote-icon.arrowVoted {
+    fill: green;
+}
+
+.vote-icon.arrowNotVoted {
+    fill: black;
 }
 
 .voteCount {
     font-size: 1.5em;
     font-weight: bold;
     margin-left: 1em;
-    margin-right: 1em;  
+    margin-right: 1em;
+    margin-bottom: -1px;
 }
