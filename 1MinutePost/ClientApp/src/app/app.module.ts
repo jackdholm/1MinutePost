@@ -19,6 +19,7 @@ import { LoginComponent } from './login/login.component';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterPopupComponent } from './register-popup/register-popup.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { RegisterPopupComponent } from './register-popup/register-popup.componen
     MatButtonModule,
     CountdownModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSpinnerModule
   ],
   bootstrap: [AppComponent]
 })

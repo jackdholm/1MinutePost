@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Inject } from '@angular/core';
 import { IPost } from '../IPost';
 import { PostService } from '../Services/post-service.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-post-container',
@@ -11,15 +12,19 @@ import { PostService } from '../Services/post-service.service';
 export class PostContainerComponent implements OnInit
 {
   public Posts: IPost[];
-  constructor(private pService: PostService) { }
+  loading: boolean = false;
+
+  constructor(private pService: PostService, private spinner: NgxSpinnerService) { }
+
   ngOnInit(): void
   {
+    this.spinner.show();
     this.pService.Posts.subscribe(data => {
+      if (data.length > 0)
+        this.spinner.hide();
+      console.log("Data: ", data);
       this.Posts = data;
-      this.Posts.forEach(p => {
     });
-    });
-    //this.pService.getAll().subscribe(data => this.Posts = data);
   }
 
   deletePost(post: number)

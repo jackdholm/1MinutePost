@@ -27,6 +27,7 @@
     "hammerjs": "^2.0.8",
     "jquery": "3.4.1",
     "ngx-countdown": "17.1.1",
+    "ngx-spinner": "18.0.0",
     "oidc-client": "^1.9.1",
     "popper.js": "^1.16.0",
     "rxjs": "^6.5.3",

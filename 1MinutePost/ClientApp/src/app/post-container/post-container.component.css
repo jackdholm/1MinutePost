@@ -14,3 +14,13 @@
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+
+.spinner-container {
+  position: relative;
+  min-height: 300px; /* Ensures space for spinner, adjust to estimated post height */
+}
+
+::ng-deep .post-spinner .ngx-spinner-overlay {
+  top: 25%; /* or use media queries for better responsiveness */
+  transform: translateY(-25%);
+}
