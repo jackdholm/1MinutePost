@@ -11,13 +11,14 @@
 .mat-card-header {
   flex-shrink: 0;
 }
-  /*.mat-card-content {
-    flex-grow: 2;
-    overflow: auto;
-  }*/
+
 .mat-card-content {
   flex-grow: 1;
   overflow: auto;
+}
+
+.actions {
+  border-top: 2px solid #f4f49f;
 }
 
 #username {
