@@ -2,7 +2,8 @@
     margin: 0px 5px 0px 5px;
 }
 .username-display{
-    margin: 0px 0px 5px 4px;
+    margin-bottom: 5px;
     text-transform: capitalize;
     color: white;
+    font-size: 1.5rem;
 }
