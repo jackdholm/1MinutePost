@@ -18,11 +18,15 @@ export class PostContainerComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.spinner.show();
-    this.pService.Posts.subscribe(data => {
-      if (data.length > 0)
+    this.pService.loading$.subscribe((loading) => {
+      if (loading) {
+        this.spinner.show();
+      } else {
         this.spinner.hide();
-      console.log("Data: ", data);
+      }
+    });
+
+    this.pService.Posts.subscribe(data => {
       this.Posts = data;
     });
   }

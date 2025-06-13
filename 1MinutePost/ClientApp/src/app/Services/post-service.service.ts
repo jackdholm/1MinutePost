@@ -12,6 +12,8 @@ export class PostService
   private _list: IPost[]
   private _sourceList: BehaviorSubject<IPost[]> = new BehaviorSubject([]);
   public Posts: Observable<IPost[]> = this._sourceList.asObservable();
+  private _loadingSubject = new BehaviorSubject<boolean>(true);
+  public loading$ = this._loadingSubject.asObservable();
 
   constructor(private http: HttpClient, @Inject('BASE_URL') url: string)
   {
@@ -21,9 +23,14 @@ export class PostService
 
   Get()
   {
-    this.http.get<IPost[]>(this.baseUrl + 'api/post').subscribe((data: IPost[]) => {
+    this.http.get<IPost[]>(this.baseUrl + 'api/post').subscribe(
+      (data: IPost[]) => {
       this._list = data;
       this._sourceList.next(this._list);
+    }, (err) => {
+      console.error(err);
+    }, () => {
+      this._loadingSubject.next(false);
     });
   }
   getAll(): Observable<IPost[]>
@@ -33,7 +40,12 @@ export class PostService
 
   post(p)
   {
-    this.http.post(this.baseUrl + 'api/post', p).subscribe(data => this.Get());
+    this.http.post(this.baseUrl + 'api/post', p).subscribe(data => {
+      if (this._list.length === 0) {
+        this._loadingSubject.next(true);
+      }
+      this.Get();
+    });
   }
 
   Delete(i: number)
