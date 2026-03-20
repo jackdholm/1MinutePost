@@ -27,6 +27,7 @@ namespace _1MinutePost.Controllers
         {
             var user = new User
             {
+                Pid = Guid.NewGuid(),
                 Username = data.Username.Trim().ToLower(),
                 Password = BCrypt.Net.BCrypt.HashPassword(data.Password)
             };
@@ -51,7 +52,7 @@ namespace _1MinutePost.Controllers
 
             if (!BCrypt.Net.BCrypt.Verify(data.Password, user.Password))
                 return Unauthorized("Invalid Credentials");
-            
+
             string jwt;
             try
             {
@@ -68,7 +69,7 @@ namespace _1MinutePost.Controllers
             }
             catch
             {
-                return StatusCode(500, new { message = "Append Cookies Failed"});
+                return StatusCode(500, new { message = "Append Cookies Failed" });
             }
 
             return Ok("Success");

@@ -37,7 +37,7 @@ namespace _1MinutePost.Controllers
                 user = _context.Users.First(u => u.Id == 0);
             }
 
-            DateTime dt = DateTime.Now.AddMinutes(-10.0);
+            DateTime cutoffUtc = DateTime.UtcNow.AddMinutes(-10.0);
             var query = _context.Posts.Include(p => p.Votes)
                 .Join(
                     _context.Users,
@@ -51,9 +51,9 @@ namespace _1MinutePost.Controllers
                         Votes = post.Votes,
                         PostId = post.Pid
                     }
-                    ).Where(p => p.Created >= dt.AddMinutes(-p.Votes.Count)).OrderBy(p => p.Created).ToArray();
+                    ).Where(p => p.Created.HasValue && p.Created.Value >= cutoffUtc).OrderBy(p => p.Created).ToArray();
             List<IPost> posts = new List<IPost>();
-            foreach(var p in query)
+            foreach (var p in query)
             {
                 IPost i = new IPost
                 {
@@ -71,7 +71,7 @@ namespace _1MinutePost.Controllers
 
         // POST api/<PostController>
         [HttpPost]
-        public IActionResult Post([FromBody]IPost post)
+        public IActionResult Post([FromBody] IPost post)
         {
             User user;
             try
@@ -90,6 +90,7 @@ namespace _1MinutePost.Controllers
             Console.WriteLine(post.Text);
             Post p = new Post()
             {
+                Pid = Guid.NewGuid(),
                 UserId = user.Id,
                 Text = post.Text,
                 Created = DateTime.UtcNow

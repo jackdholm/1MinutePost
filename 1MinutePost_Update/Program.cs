@@ -1,25 +1,38 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Npgsql;
+using Microsoft.Data.Sqlite;
 using System.Reflection;
 
 var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 if (environmentName == null)
     environmentName = "Production";
-var config = new ConfigurationBuilder()
-                 .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location))
-                 .AddJsonFile($"appsettings.{environmentName}.json", optional: false, reloadOnChange: true)
-                 .AddUserSecrets<Program>()
-                 .Build();
+
+var configBuilder = new ConfigurationBuilder()
+    .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location))
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+    .AddEnvironmentVariables();
+
+var config = configBuilder.Build();
 
 string connectionString = config.GetConnectionString("mpostDB");
 
-await using var connection   = new NpgsqlConnection(connectionString);
+await using var connection = new SqliteConnection(connectionString);
 await connection.OpenAsync();
+
+await using (var setup = connection.CreateCommand())
+{
+    setup.CommandText = @"
+        PRAGMA foreign_keys=ON;
+        PRAGMA busy_timeout=5000;
+        PRAGMA journal_mode=WAL;";
+    await setup.ExecuteNonQueryAsync();
+}
 
 DateTime time = DateTime.UtcNow.AddHours(-1);
 
-await using (var command = new NpgsqlCommand("DELETE FROM posts WHERE created < @p", connection))
+await using (var command = connection.CreateCommand())
 {
-    command.Parameters.AddWithValue("p", time);
+    command.CommandText = "DELETE FROM posts WHERE datetime(created) < datetime(@p)";
+    command.Parameters.AddWithValue("@p", time.ToString("o"));
     await command.ExecuteNonQueryAsync();
 }

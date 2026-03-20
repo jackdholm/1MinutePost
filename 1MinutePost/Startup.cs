@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Linq;
 
 namespace _1MinutePost
 {
@@ -30,8 +32,8 @@ namespace _1MinutePost
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddEntityFrameworkNpgsql().AddDbContext<mpostContext>(opt => 
-            opt.UseNpgsql(Configuration.GetConnectionString("mpostDB")));
+            services.AddDbContext<mpostContext>(opt =>
+            opt.UseSqlite(Configuration.GetConnectionString("mpostDB")));
 
             services.AddScoped<DbContext, mpostContext>();
             services.AddSingleton<IConfiguration>(Configuration);
@@ -41,6 +43,17 @@ namespace _1MinutePost
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<mpostContext>();
+                db.Database.EnsureCreated();
+
+                if (!db.Users.Any(u => u.Id == 0))
+                {
+                    db.Database.ExecuteSqlInterpolated($"INSERT INTO users (id, pid, username, password) VALUES (0, {Guid.NewGuid()}, {"anonymous"}, {BCrypt.Net.BCrypt.HashPassword(Guid.NewGuid().ToString("N"))})");
+                }
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -11,13 +11,17 @@ namespace _1MinutePost
 {
     public class JwtService
     {
-        private string _key = "In secrets.json";
+        private string _key = "";
 
         public JwtService(IConfiguration configuration)
         {
             _key = configuration.GetValue<string>("SecretKey");
+            if (string.IsNullOrWhiteSpace(_key) || _key == "SET_THIS_IN_PRODUCTION_ENV")
+            {
+                throw new InvalidOperationException("SecretKey is not configured. Set it in appsettings or environment variable 'SecretKey'.");
+            }
         }
-        
+
         public string Generate(int id)
         {
             var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
@@ -41,7 +45,7 @@ namespace _1MinutePost
                 ValidateIssuer = false,
                 ValidateAudience = false
             }
-            , out SecurityToken securityToken) ;
+            , out SecurityToken securityToken);
 
             return (JwtSecurityToken)securityToken;
         }

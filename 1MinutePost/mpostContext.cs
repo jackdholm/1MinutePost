@@ -25,15 +25,12 @@ namespace _1MinutePost
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Name=mpostDB");
+                optionsBuilder.UseSqlite("Name=mpostDB");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasPostgresExtension("uuid-ossp")
-                .HasAnnotation("Relational:Collation", "en_US.UTF-8");
-
             modelBuilder.Entity<Post>(entity =>
             {
                 entity.ToTable("posts");
@@ -41,12 +38,10 @@ namespace _1MinutePost
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Created)
-                    .HasColumnType("timestamp with time zone")
                     .HasColumnName("created");
 
                 entity.Property(e => e.Pid)
-                    .HasColumnName("pid")
-                    .HasDefaultValueSql("uuid_generate_v4()");
+                    .HasColumnName("pid");
 
                 entity.Property(e => e.Text)
                     .HasMaxLength(300)
@@ -71,8 +66,7 @@ namespace _1MinutePost
                     .HasColumnName("password");
 
                 entity.Property(e => e.Pid)
-                    .HasColumnName("pid")
-                    .HasDefaultValueSql("uuid_generate_v4()");
+                    .HasColumnName("pid");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(20)
@@ -90,7 +84,6 @@ namespace _1MinutePost
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.Voted)
-                    .HasColumnType("timestamp with time zone")
                     .HasColumnName("voted");
 
                 entity.HasOne(d => d.Post)
