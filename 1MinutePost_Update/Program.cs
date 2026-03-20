@@ -34,5 +34,6 @@ await using (var command = connection.CreateCommand())
 {
     command.CommandText = "DELETE FROM posts WHERE datetime(created) < datetime(@p)";
     command.Parameters.AddWithValue("@p", time.ToString("o"));
-    await command.ExecuteNonQueryAsync();
+    var deletedCount = await command.ExecuteNonQueryAsync();
+    Console.WriteLine($"Deleted {deletedCount} post(s) older than one hour.");
 }
