@@ -17,8 +17,8 @@ var config = configBuilder.Build();
 string? connectionString = config.GetConnectionString("mpostDB");
 if (connectionString == null)
 {
-     Console.WriteLine("Error: Connection string 'mpostDB' not found in configuration.");
-     return;
+    Console.WriteLine("Error: Connection string 'mpostDB' not found in configuration.");
+    return;
 }
 
 await using var connection = new SqliteConnection(connectionString);
@@ -37,5 +37,6 @@ await using (var command = connection.CreateCommand())
 {
     command.CommandText = "DELETE FROM posts";
     var deletedCount = await command.ExecuteNonQueryAsync();
-    Console.WriteLine($"Deleted {deletedCount} post(s)");
+    if (deletedCount > 0)
+        Console.WriteLine(deletedCount > 1 ? $"Deleted {deletedCount} posts" : $"Deleted {deletedCount} post");
 }
