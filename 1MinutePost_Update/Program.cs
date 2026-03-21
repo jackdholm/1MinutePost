@@ -7,14 +7,19 @@ if (environmentName == null)
     environmentName = "Production";
 
 var configBuilder = new ConfigurationBuilder()
-    .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location))
+    .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) ?? Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
 var config = configBuilder.Build();
 
-string connectionString = config.GetConnectionString("mpostDB");
+string? connectionString = config.GetConnectionString("mpostDB");
+if (connectionString == null)
+{
+     Console.WriteLine("Error: Connection string 'mpostDB' not found in configuration.");
+     return;
+}
 
 await using var connection = new SqliteConnection(connectionString);
 await connection.OpenAsync();
