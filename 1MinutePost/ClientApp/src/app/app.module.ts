@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { PostContainerComponent } from './post-container/post-container.component';
 import { PostCreateComponent } from './post-create/post-create.component';
-import { CountdownConfig, CountdownModule } from 'ngx-countdown';
+import { CountdownModule } from 'ngx-countdown';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { LoginComponent } from './login/login.component';
 import { LoginPopupComponent } from './login-popup/login-popup.component';
@@ -34,7 +34,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RegisterPopupComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot

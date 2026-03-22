@@ -4,9 +4,10 @@ import { IRegister } from '../IRegister';
 import { AuthService } from '../Services/auth-service.service';
 
 @Component({
-  selector: 'app-register-popup',
-  templateUrl: './register-popup.component.html',
-  styleUrls: ['./register-popup.component.css']
+    selector: 'app-register-popup',
+    templateUrl: './register-popup.component.html',
+    styleUrls: ['./register-popup.component.css'],
+    standalone: false
 })
 export class RegisterPopupComponent implements OnInit {
   ErrorExistingUser = false;

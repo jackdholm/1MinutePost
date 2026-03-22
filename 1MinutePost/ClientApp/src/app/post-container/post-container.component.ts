@@ -5,9 +5,10 @@ import { PostService } from '../Services/post-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-post-container',
-  templateUrl: './post-container.component.html',
-  styleUrls: ['./post-container.component.css']
+    selector: 'app-post-container',
+    templateUrl: './post-container.component.html',
+    styleUrls: ['./post-container.component.css'],
+    standalone: false
 })
 export class PostContainerComponent implements OnInit
 {

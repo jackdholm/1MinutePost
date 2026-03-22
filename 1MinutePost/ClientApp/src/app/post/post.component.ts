@@ -2,15 +2,14 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
-import { error } from 'protractor';
-import { Observable } from 'rxjs';
 import { ErrorService } from '../Services/error.service';
 import { VoteService } from '../Services/vote-service.service';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+    selector: 'app-post',
+    templateUrl: './post.component.html',
+    styleUrls: ['./post.component.css'],
+    standalone: false
 })
 export class PostComponent implements OnInit
 {
@@ -43,8 +42,11 @@ export class PostComponent implements OnInit
   }
 
   configureTime() {
-    var time = 600000 - (new Date().getTime() - new Date(this.Created).getTime()) + 60000 * this.numberVotes;
-    this.TimeConfig = { leftTime: time / 1000, format: 'm:ss' };
+    const elapsedMs = new Date().getTime() - new Date(this.Created).getTime();
+    const totalMs = 600000 + 60000 * this.numberVotes;
+    const timeLeftMs = Math.max(0, totalMs - elapsedMs);
+
+    this.TimeConfig = { leftTime: Math.floor(timeLeftMs / 1000), format: 'm:ss' };
   }
 
   HandleEvent(e: CountdownEvent)
@@ -58,6 +60,7 @@ export class PostComponent implements OnInit
       if (this.arrowVoted) {
         this.arrowVoted = false;
         this.numberVotes--;
+        this.configureTime();
       }
       else {
         this.arrowVoted = true;

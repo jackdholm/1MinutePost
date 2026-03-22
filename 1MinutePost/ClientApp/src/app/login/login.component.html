@@ -1,10 +1,11 @@
-<div class="d-flex justify-content-between" *ngIf="LoggedIn; else elseBlock">
-  <h2 class="username-display">{{CurrentUser}}</h2>
-  <button class="btn btn-primary" (click)="LogOut()">Log Out</button>
-</div>
-<ng-template #elseBlock>
+@if (LoggedIn) {
+  <div class="d-flex justify-content-between">
+    <h2 class="username-display">{{CurrentUser}}</h2>
+    <button class="btn btn-primary" (click)="LogOut()">Log Out</button>
+  </div>
+} @else {
   <div class="d-flex justify-content-end">
     <button class="btn btn-primary" (click)="OpenLogin()">Log In</button>
     <button class="btn btn-primary" (click)="OpenRegister()">Register</button>
   </div>
-</ng-template>
+}

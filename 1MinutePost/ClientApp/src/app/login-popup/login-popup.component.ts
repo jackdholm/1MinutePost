@@ -5,9 +5,10 @@ import { AuthService } from '../Services/auth-service.service';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-login-popup',
-  templateUrl: './login-popup.component.html',
-  styleUrls: ['./login-popup.component.css']
+    selector: 'app-login-popup',
+    templateUrl: './login-popup.component.html',
+    styleUrls: ['./login-popup.component.css'],
+    standalone: false
 })
 export class LoginPopupComponent implements OnInit {
   ErrorInvalidCredentials = false;

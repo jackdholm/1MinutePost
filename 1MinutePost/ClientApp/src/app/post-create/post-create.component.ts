@@ -4,9 +4,10 @@ import { ErrorService } from '../Services/error.service';
 import { PostService } from '../Services/post-service.service';
 
 @Component({
-  selector: 'app-post-create',
-  templateUrl: './post-create.component.html',
-  styleUrls: ['./post-create.component.css']
+    selector: 'app-post-create',
+    templateUrl: './post-create.component.html',
+    styleUrls: ['./post-create.component.css'],
+    standalone: false
 })
 export class PostCreateComponent implements OnInit {
 

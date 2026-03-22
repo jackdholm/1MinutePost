@@ -1,12 +1,16 @@
 <div class="spinner-container">
   <ngx-spinner [fullScreen]="false"
-               type="ball-scale-multiple"
-               class="post-spinner"
-               bdColor="rgba(0,0,0,0)">
+    type="ball-scale-multiple"
+    class="post-spinner"
+    bdColor="rgba(0,0,0,0)">
   </ngx-spinner>
-  <div *ngIf="Posts" class="post-container">
-    <div *ngFor="let p of Posts; let i = index">
-      <app-post class="post" text="{{ p.text }}" username="{{ p.username }}" created="{{ p.created }}" position="{{ i }}" pid="{{ p.pid }}" vote-count="{{ p.voteCount }}" voted="{{ p.voted }}" (delete)="deletePost($event)"></app-post>
+  @if (Posts) {
+    <div class="post-container">
+      @for (p of Posts; track p; let i = $index) {
+        <div>
+          <app-post class="post" text="{{ p.text }}" username="{{ p.username }}" created="{{ p.created }}" position="{{ i }}" pid="{{ p.pid }}" vote-count="{{ p.voteCount }}" voted="{{ p.voted }}" (delete)="deletePost($event)"></app-post>
+        </div>
+      }
     </div>
-  </div>
+  }
 </div>
