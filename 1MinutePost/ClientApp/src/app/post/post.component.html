@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-between ml-2" id="postHeader">
     <h5 id="username">{{Username}}</h5>
     <p id="timeLeft">
-      <countdown #counter [config]="TimeConfig" (event)="HandleEvent($event)"></countdown>
+      {{ displayTime }}
     </p>
   </div>
   <div class="flex-grow-1 d-flex flex-column">

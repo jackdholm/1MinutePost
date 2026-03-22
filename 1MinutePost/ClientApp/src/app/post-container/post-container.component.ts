@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IPost } from '../IPost';
 import { PostService } from '../Services/post-service.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -32,8 +31,8 @@ export class PostContainerComponent implements OnInit
     });
   }
 
-  deletePost(post: number)
+  deletePost(postId: string)
   {
-    this.pService.Delete(post);
+    this.pService.Delete(postId);
   }
 }

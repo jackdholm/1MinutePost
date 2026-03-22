@@ -6,9 +6,9 @@
   </ngx-spinner>
   @if (Posts) {
     <div class="post-container">
-      @for (p of Posts; track p; let i = $index) {
+      @for (p of Posts; track p.pid) {
         <div>
-          <app-post class="post" text="{{ p.text }}" username="{{ p.username }}" created="{{ p.created }}" position="{{ i }}" pid="{{ p.pid }}" vote-count="{{ p.voteCount }}" voted="{{ p.voted }}" (delete)="deletePost($event)"></app-post>
+          <app-post class="post" [text]="p.text" [username]="p.username" [created]="p.created" [pid]="p.pid" [vote-count]="p.voteCount" [voted]="p.voted" (delete)="deletePost($event)"></app-post>
         </div>
       }
     </div>
